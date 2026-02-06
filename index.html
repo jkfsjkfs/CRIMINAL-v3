@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <title>Criminal Taquería | Los mejores tacos en Medellín</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet">
 
   <!-- Tailwind CDN -->
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -18,7 +18,8 @@
           colors: {
             criminalBlack: "#121212",
             criminalGold: "#D4AF37",
-            criminalRed: "#8B0000",
+            // Rojo vivo (NO vino tinto)
+            criminalRed: "#D00000",
             criminalBeige: "#f5f0e8",
             criminalBeigeSoft: "#f9f4eb"
           },
@@ -30,40 +31,82 @@
       }
     };
   </script>
+
   <style>
     body { font-family: 'Poppins', system-ui, sans-serif; }
- 
-.titulo-criminal {
-    font-family: 'Pirata One', serif;
-    letter-spacing: 0.05em;
-    font-size: 2.2rem;
-    line-height: 1;
-}
 
+    .titulo-criminal {
+      font-family: 'Pirata One', serif;
+      letter-spacing: 0.05em;
+      line-height: 1;
+    }
+
+    /* NAVBAR */
     #site-header {
-      transition: background-color 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+      transition: background-color 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
       background-color: transparent;
       border-bottom: 1px solid transparent;
     }
+    /* Solo al hacer scroll: banda negra */
     #site-header.scrolled {
-      background-color: rgba(245, 240, 232, 0.96);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-      border-bottom-color: rgba(0,0,0,0.06);
+      background-color: rgba(18, 18, 18, 0.94);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.35);
+      border-bottom-color: rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px);
     }
+
+    /* CAROUSELS */
+    .carousel-viewport { overflow: hidden; position: relative; }
+    .carousel-track {
+      display: flex;
+      will-change: transform;
+      transition: transform 450ms ease;
+    }
+    .carousel-slide { flex: 0 0 100%; }
+
+    /* Chuzos: 2 visibles desde md */
+    @media (min-width: 768px) {
+      .carousel-slide.chuzos { flex: 0 0 50%; }
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 22px;
+      cursor: pointer;
+      transition: transform 200ms ease, background 200ms ease;
+      user-select: none;
+    }
+    .carousel-btn:hover { background: rgba(0,0,0,0.78); transform: translateY(-50%) scale(1.04); }
+    .carousel-btn:active { transform: translateY(-50%) scale(0.98); }
+    .carousel-btn.left { left: 12px; }
+    .carousel-btn.right { right: 12px; }
   </style>
 </head>
+
 <body class="bg-criminalBeigeSoft text-criminalBlack">
 
   <!-- NAVBAR -->
   <header id="site-header" class="fixed top-0 left-0 w-full z-40">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <a href="#inicio" class="flex items-center gap-3">
-        <div class="w-10 h-10 flex items-center justify-center">
+        <div class="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
           <img src="img/criminal-logo.png" alt="Criminal" class="w-full h-full object-contain">
         </div>
 
         <div>
-          <div class="titulo-criminal text-[1.1rem] tracking-[0.25em] uppercase text-white header-logo-top">
+          <div class="titulo-criminal text-[1.15rem] md:text-[1.25rem] tracking-[0.28em] uppercase text-white header-logo-top">
             Criminal
           </div>
           <div class="text-sm font-semibold text-white header-logo-bottom">
@@ -71,10 +114,11 @@
           </div>
         </div>
       </a>
+
       <nav class="hidden md:flex items-center gap-8 text-xs font-medium">
-        <a href="#menu" class="nav-link uppercase tracking-[0.18em]">Menú</a>
-        <a href="#puntos" class="nav-link uppercase tracking-[0.18em]">Puntos Criminal</a>
-        <a href="#contacto" class="nav-link uppercase tracking-[0.18em]">Contacto</a>
+        <a href="#menu" class="nav-link uppercase tracking-[0.18em] text-white">Menú</a>
+        <a href="#puntos" class="nav-link uppercase tracking-[0.18em] text-white">Puntos Criminal</a>
+        <a href="#contacto" class="nav-link uppercase tracking-[0.18em] text-white">Contacto</a>
       </nav>
     </div>
   </header>
@@ -96,21 +140,34 @@
     <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/40 to-black/70"></div>
 
     <!-- Contenido -->
-    <div class="relative max-w-6xl mx-auto px-4 h-full flex flex-col justify-center pt-20">
+    <div class="relative max-w-6xl mx-auto px-4 h-full flex flex-col justify-center pt-24">
 
-      <div class="max-w-xl js-animate opacity-0 translate-y-6 transition-all duration-700">
-        <p class="titulo-criminal  text-criminalGold mb-3">
-          MEDELLÍN · TACOS · COCTELES
+      <div class="max-w-2xl js-animate opacity-0 translate-y-6 transition-all duration-700">
+        <!-- Texto arriba: se mantiene -->
+        <p class="titulo-criminal text-criminalGold mb-3 text-xl md:text-2xl tracking-[0.12em]">
+          MEDELLÍN · TACOS · CÓCTELES
         </p>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-criminalGold leading-tight mb-3">
+
+        <!-- Título más grande y en mayúsculas -->
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold text-criminalGold leading-tight mb-3 uppercase tracking-wide">
           Criminal Taquería
         </h1>
-        <p class="text-sm md:text-base text-white/90 mb-6">
-          Tacos hechos al momento, maíz nixtamalizado y cocteles que suben el nivel del delito gastronómico.
+
+        <!-- Debajo del título (pedido explícito) -->
+        <p class="titulo-criminal text-white/90 mb-7 text-base md:text-lg tracking-[0.10em] uppercase">
+          Medellín · Tacos · Cócteles
         </p>
+
+        <!-- Botones: rojo + acceso a puntos -->
         <div class="flex flex-wrap gap-3">
-          <a href="#menu" class="inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-criminalGold text-criminalBlack text-[0.65rem] uppercase tracking-[0.22em] hover:bg-white transition">
+          <a href="#menu"
+             class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-criminalRed text-white text-[0.70rem] md:text-[0.75rem] uppercase tracking-[0.24em] font-semibold hover:bg-white hover:text-criminalBlack transition">
             Ver menú
+          </a>
+
+          <a href="#puntos"
+             class="inline-flex items-center justify-center px-6 py-3 rounded-full bg-black/55 text-white text-[0.70rem] md:text-[0.75rem] uppercase tracking-[0.24em] font-semibold border border-white/20 hover:bg-black/80 transition">
+            Puntos de venta
           </a>
         </div>
       </div>
@@ -127,696 +184,473 @@
   </section>
 
 
-
-<!-- PLATOS -->
-<section id="historia" class="py-16 bg-criminalBeige">
-  <div class="max-w-6xl mx-auto px-4">
-
-    <!-- TEXTO (AHORA ARRIBA A LA IZQUIERDA) -->
-    <div class="js-animate opacity-0 translate-y-6 transition-all duration-700 mb-10 max-w-xl">
-      <p class="titulo-criminal  text-criminalRed mb-3">
-        NUESTRA COCINA
-      </p>
-
-      <p class="text-sm md:text-base text-criminalBlack/70">
-        Los que nos visitan esperan satisfacer sus necesidades principales
-      </p>
-
-      <h3 class="text-xl md:text-3xl font-semibold mb-3">
-        COMER, BEBER Y PARCHAR
-      </h3>
-    </div>
-
-    <!-- GALERÍA DE PLATOS (6 COLUMNAS) -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 js-animate opacity-0 translate-y-6 transition-all duration-700 delay-150">
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/010-MSPH1991.jpg" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/063-MSPH2079.jpg" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/123-MSPH2189.jpg" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/Callejera2.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalTaqueria-187.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalTaqueria-211.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/Dorilocos.jpg" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoBirria.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoCarnitas.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoPastor.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalJunio2023-25.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalJunio2023-31.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/DSC07994.jpg" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/Esquites.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/Nachos.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/Quesadilla.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoAguachile.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoArrachera.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacoVegetariano.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/TacovegetarianoChampinones.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalTaqueria-22.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalTaqueria-108.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-      <div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform">
-        <img src="img/PRODUCTO/CriminalTaqueria-140.JPG" class="w-full h-full aspect-square object-cover" />
-      </div>
-
-    </div>
-
-  </div>
-</section>
-
-
-  
-  
-
-  <!-- GALERÍA -->
-  <section id="galeria" class="py-16 bg-criminalBeigeSoft">
+  <!-- PRODUCTOS -->
+  <section id="menu" class="py-16 bg-criminalBeige">
     <div class="max-w-6xl mx-auto px-4">
-      <div class="flex items-end justify-between mb-6 js-animate opacity-0 translate-y-6 transition-all duration-700">
-        <div>
-          <p class="titulo-criminal  text-criminalRed mb-2">
-            EVENTOS
-          </p>
+
+      <!-- Texto -->
+      <div class="js-animate opacity-0 translate-y-6 transition-all duration-700 mb-8 max-w-xl">
+        <p class="titulo-criminal text-criminalRed mb-3 text-3xl md:text-4xl tracking-[0.08em] uppercase">
+          Productos
+        </p>
+        <h3 class="text-xl md:text-3xl font-semibold mb-3">
+          COMER, BEBER Y PARCHAR
+        </h3>
+      </div>
+
+      <!-- Carrusel 1x1 con flechas + autoplay -->
+      <div class="carousel-viewport js-animate opacity-0 translate-y-6 transition-all duration-700 delay-150 rounded-2xl border border-black/10 shadow-md bg-white/40 backdrop-blur">
+        <button class="carousel-btn left" type="button" aria-label="Anterior" data-carousel-prev="productos">‹</button>
+        <button class="carousel-btn right" type="button" aria-label="Siguiente" data-carousel-next="productos">›</button>
+
+        <div class="carousel-track" data-carousel="productos">
+          <!-- Slides -->
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/010-MSPH1991.jpg" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 1">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/063-MSPH2079.jpg" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 2">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/123-MSPH2189.jpg" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 3">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/Callejera2.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 4">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalTaqueria-187.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 5">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalTaqueria-211.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 6">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/Dorilocos.jpg" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 7">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoBirria.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 8">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoCarnitas.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 9">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoPastor.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 10">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalJunio2023-25.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 11">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalJunio2023-31.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 12">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/DSC07994.jpg" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 13">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/Esquites.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 14">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/Nachos.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 15">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/Quesadilla.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 16">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoAguachile.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 17">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoArrachera.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 18">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacoVegetariano.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 19">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/TacovegetarianoChampinones.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 20">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalTaqueria-22.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 21">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalTaqueria-108.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 22">
+            </div>
+          </div>
+
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/PRODUCTO/CriminalTaqueria-140.JPG" class="w-full h-[70vh] max-h-[520px] object-cover" alt="Producto 23">
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- GALERÍA COMPLETA ESTILO CRIMINAL -->
-    <div class="grid grid-cols-3 gap-4 js-animate opacity-0 translate-y-6 transition-all duration-700 delay-150">
-
-      <!-- IMG 1 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/Brunch-81.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 2 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/Brunch-105.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 3 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/DSC07866.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 4 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/historia-33.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 5 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/historia-37.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 6 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/historia-72.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 7 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/historia-78.jpg" class="w-full h-full object-cover" />
-      </div>
-	  
-  <!-- IMG 1 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/Brunch-81.jpg" class="w-full h-full object-cover" />
-      </div>
-
-      <!-- IMG 2 -->
-      <div class="rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-        <img src="img/EVENTOS/Brunch-105.jpg" class="w-full h-full object-cover" />
-      </div>	  
-	  
-
-    </div>
-		<div class="rounded-2xl overflow-hidden border border-white/10 shadow-md hover:scale-[1.03] transition-transform duration-500">
-			<img src="img/EVENTOS/EVENTOS.jpg" class="w-full h-full object-cover" style="widht:100%; height:250px;" />
-		</div>
-	
+      <p class="text-xs text-criminalBlack/60 mt-3">
+        Nota: las imágenes deben optimizarse (peso/tamaño) para mejorar carga.
+      </p>
     </div>
   </section>
 
 
-<!--
-<section id="menu" class="py-24 bg-[#fdfbf7]">
-  <div class="max-w-6xl mx-auto px-4">
-    <div class="mb-12">
-      <p class="titulo-criminal text-criminalRed mb-2">
-        CARTA CRIMINAL
-      </p>
-      <h2 class="text-2xl md:text-3xl font-semibold mb-2">
-        Tacos, antojitos y algo para el vaso.
-      </h2>
-      <p class="text-sm text-criminalBlack/70 max-w-md">
-        Menú directo. Sin rodeos. Aquí se viene a comer.
-      </p>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-20 text-sm">
-
-      <div class="menu-file">
-        <h3 class="file-title">PLATOS</h3>
-        <ul class="file-list">
-
-          <li><span>Esquites Clásicos</span><span class="price-stamp">$16.900</span></li>
-          <li><span>Esquites al Pastor</span><span class="price-stamp">$18.900</span></li>
-          <li><span>Esquites de Pollo</span><span class="price-stamp">$18.900</span></li>
-          <li><span>Esquites Arrachera</span><span class="price-stamp">$18.900</span></li>
-
-          <li class="separator">—</li>
-
-          <li><span>Bowls / Tazones</span><span class="price-stamp">$38.900</span></li>
-
-          <li><span>Taco al Pastor x3</span><span class="price-stamp">$31.500</span></li>
-          <li><span>Taco Cochinita Pibill x3</span><span class="price-stamp">$31.400</span></li>
-          <li><span>Taco de Pollo x3</span><span class="price-stamp">$30.500</span></li>
-          <li><span>Taco de Birria x2</span><span class="price-stamp">$31.400</span></li>
-          <li><span>Taco Pork Belly x3</span><span class="price-stamp">$32.500</span></li>
-          <li><span>Taco Carnitas x3</span><span class="price-stamp">$31.500</span></li>
-          <li><span>Taco Vegetariano Orellanas x2</span><span class="price-stamp">$26.900</span></li>
-          <li><span>Taco Chorizo x3</span><span class="price-stamp">$30.500</span></li>
-          <li><span>Taco Arrachera x3</span><span class="price-stamp">$32.500</span></li>
-
-        </ul>
+  <!-- EVENTOS (banner 1 visible + autoplay) -->
+  <section id="galeria" class="py-16 bg-criminalBeigeSoft">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex items-end justify-between mb-6 js-animate opacity-0 translate-y-6 transition-all duration-700">
+        <div>
+          <p class="titulo-criminal text-criminalRed mb-2 text-3xl md:text-4xl tracking-[0.08em] uppercase">
+            Eventos
+          </p>
+        </div>
       </div>
 
-      <div class="menu-file">
-        <h3 class="file-title">ESPECIALES</h3>
-        <ul class="file-list">
+      <div class="carousel-viewport js-animate opacity-0 translate-y-6 transition-all duration-700 delay-150 rounded-2xl border border-black/10 shadow-md bg-white/40 backdrop-blur">
+        <button class="carousel-btn left" type="button" aria-label="Anterior" data-carousel-prev="eventos">‹</button>
+        <button class="carousel-btn right" type="button" aria-label="Siguiente" data-carousel-next="eventos">›</button>
 
-          <li><span>Cheesadilla de Queso</span><span class="price-stamp">$27.000</span></li>
-          <li><span>Cheesadilla de Chili con Carne</span><span class="price-stamp">$27.000</span></li>
-          <li><span>Cheesadilla de Pollo</span><span class="price-stamp">$37.900</span></li>
-          <li><span>Cheesadilla de Pastor</span><span class="price-stamp">$39.900</span></li>
-          <li><span>Cheesadilla de Hongos</span><span class="price-stamp">$37.900</span></li>
-          <li><span>Cheesadilla de Birria</span><span class="price-stamp">$39.900</span></li>
-
-          <li class="separator">—</li>
-
-          <li><span>Elotes Desgranados</span><span class="price-stamp">$27.000</span></li>
-          <li><span>Elotes al Pastor</span><span class="price-stamp">$32.500</span></li>
-          <li><span>Elotes Arrachera</span><span class="price-stamp">$32.500</span></li>
-          <li><span>Elotes Pollo</span><span class="price-stamp">$32.000</span></li>
-
-          <li class="separator">—</li>
-
-          <li><span>Burrito de Pollo</span><span class="price-stamp">$38.500</span></li>
-          <li><span>Burrito de Res</span><span class="price-stamp">$38.500</span></li>
-          <li><span>Burrito al Pastor</span><span class="price-stamp">$38.500</span></li>
-          <li><span>Burrito Mixto</span><span class="price-stamp">$38.500</span></li>
-
-          <li class="separator">—</li>
-
-          <li><span>Nachos Kabrones</span><span class="price-stamp">$42.500</span></li>
-          <li><span>Nachos Remachos</span><span class="price-stamp">$37.000</span></li>
-
-          <li><span>Molito Santo</span><span class="price-stamp">$36.200</span></li>
-          <li><span>Crunchy Salad Pollo</span><span class="price-stamp">$24.000</span></li>
-          <li><span>Crunchy Salad</span><span class="price-stamp">$16.900</span></li>
-
-        </ul>
-      </div>
-
-      <div class="menu-file">
-        <h3 class="file-title">BEBIDAS</h3>
-        <ul class="file-list">
-
-          <li><span>Horchata</span><span class="price-stamp">$11.900</span></li>
-          <li><span>Agua Fresca</span><span class="price-stamp">$11.900</span></li>
-          <li><span>Mermelada de Jalapeño</span><span class="price-stamp">$9.900</span></li>
-          <li><span>Venenosa</span><span class="price-stamp">$11.900</span></li>
-          <li><span>La Negra Venenosa</span><span class="price-stamp">$11.900</span></li>
-          <li class="separator">—</li>
-
-          <li><span>Agua Hatsu</span><span class="price-stamp">$7.500</span></li>
-          <li><span>Agua Hatsu con Gas</span><span class="price-stamp">$7.500</span></li>
-          <li><span>Pepsi Light</span><span class="price-stamp">$7.500</span></li>
-          <li><span>Postobón Manzana</span><span class="price-stamp">$7.500</span></li>
-          <li><span>Té Hatsu</span><span class="price-stamp">$11.900</span></li>
-
-          <li class="separator">—</li>
-
-          <li><span>Corona 335</span><span class="price-stamp">$13.000</span></li>
-          <li><span>Stella Artois 330</span><span class="price-stamp">$13.000</span></li>
-
-          <li><span>Churros</span><span class="price-stamp">$6.900</span></li>
-          <li><span>Mala Leche</span><span class="price-stamp">$6.900</span></li>
-
-        </ul>
-      </div>
-
-    </div>
-
-    <div class="mt-20">
-      <h3 class="file-title">ADICIONES</h3>
-      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-sm">
-        <div class="addon">Guacamole <span class="price-stamp">$4.500</span></div>
-        <div class="addon">Mermelada de Jalapeño <span class="price-stamp">$4.300</span></div>
-        <div class="addon">Sour Cream <span class="price-stamp">$4.500</span></div>
-        <div class="addon">Cheddar <span class="price-stamp">$4.500</span></div>
-        <div class="addon">Pollo Parrillado <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Nachos <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Chilli con Carne <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Pastor <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Arrachera <span class="price-stamp">$8.900</span></div>
-        <div class="addon">Res <span class="price-stamp">$8.500</span></div>
-        <div class="addon">Carnita de Cerdo <span class="price-stamp">$6.000</span></div>
-        <div class="addon">Pork Belly <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Cochinita <span class="price-stamp">$7.900</span></div>
-        <div class="addon">Chorizo <span class="price-stamp">$7.900</span></div>
+        <div class="carousel-track" data-carousel="eventos">
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/Brunch-81.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 1">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/Brunch-105.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 2">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/DSC07866.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 3">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/historia-33.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 4">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/historia-37.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 5">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/historia-72.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 6">
+            </div>
+          </div>
+          <div class="carousel-slide p-3">
+            <div class="rounded-2xl overflow-hidden shadow-md bg-black/5">
+              <img src="img/EVENTOS/historia-78.jpg" class="w-full h-[55vh] max-h-[460px] object-cover" alt="Evento 7">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</section>
-
-<style>
-.menu-file {
-  border-left: 3px solid rgba(0,0,0,0.1);
-  padding-left: 1.5rem;
-}
-
-.file-title {
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-transform: uppercase;
-}
-
-.file-list li {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-bottom: 1px dashed rgba(0,0,0,0.15);
-  padding-bottom: 0.35rem;
-  margin-bottom: 0.6rem;
-}
+  </section>
 
 
-.separator {
-  opacity: 0.3;
-  margin: 0.8rem 0;
-}
-
-.price-stamp {
-  background: #8B0000;
-  color: #fff;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.25rem 0.6rem;
-  border-radius: 0.15rem;
-  letter-spacing: 0.08em;
-  transform: rotate(-2deg);
-}
-
-.addon {
-  display: flex;
-  justify-content: space-between;
-  border-bottom: 1px dashed rgba(0,0,0,0.15);
-  padding-bottom: 0.3rem;
-}
-</style>
-
--->
-
-  
-  <!-- PUNTOS CRIMINAL (galería con lightbox) -->
+  <!-- PUNTOS CRIMINAL (2 visibles + autoplay, fondo negro, texto blanco, sin bordes redondeados) -->
   <section id="puntos" class="py-16 bg-criminalBeigeSoft">
     <div class="max-w-6xl mx-auto px-4">
       <div class="mb-6 js-animate opacity-0 translate-y-6 transition-all duration-700">
-        <p class="titulo-criminal  text-criminalRed mb-2">
-          CHUZOS  CRIMINAL
+        <p class="titulo-criminal text-criminalRed mb-2 text-3xl md:text-4xl tracking-[0.08em] uppercase">
+          Los chuzos de la jefa
         </p>
-        <h2 class="text-xl md:text-xl font-semibold mb-2">
-          EL CHUZO DE LA JEFA
-        </h2>
         <p class="text-sm text-criminalBlack/70 max-w-md">
           Una red de lugares donde el crimen gastronómico se sirve caliente.
         </p>
       </div>
 
-      
-<!-- GRID CARTAS CUADRADAS (IMAGEN) / RECTANGULARES (CARD) -->
-<div class="grid md:grid-cols-5 gap-6 js-animate opacity-0 translate-y-6 transition-all duration-700 delay-100">
+      <div class="carousel-viewport js-animate opacity-0 translate-y-6 transition-all duration-700 delay-100 border border-white/10 shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)] bg-criminalBlack">
+        <button class="carousel-btn left" type="button" aria-label="Anterior" data-carousel-prev="chuzos">‹</button>
+        <button class="carousel-btn right" type="button" aria-label="Siguiente" data-carousel-next="chuzos">›</button>
 
-  <!-- CARD BASE -->
-  <!-- Repite el mismo patrón -->
+        <div class="carousel-track" data-carousel="chuzos">
+          <!-- 1 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-12.png" class="w-full h-full object-cover" alt="Criminal Campestre La Estación">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Campestre La Estación</span>
+                  Carrera 43A #18 Sur-135 · Local 1
+                </p>
+              </div>
+            </div>
+          </div>
 
-  <!-- 1 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
+          <!-- 2 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-13.png" class="w-full h-full object-cover" alt="Criminal Lemont">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Lemont</span>
+                  Local 0193
+                </p>
+              </div>
+            </div>
+          </div>
 
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-12.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="0" />
+          <!-- 3 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-14.png" class="w-full h-full object-cover" alt="Centro Comercial El Tesoro">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Centro Comercial El Tesoro</span>
+                  Plaza Palmas · Local 1571
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-15.png" class="w-full h-full object-cover" alt="Criminal Superior">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Superior</span>
+                  Calle 16B Sur #25B-2
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-16.png" class="w-full h-full object-cover" alt="Criminal Taquería Manila">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Taquería Manila</span>
+                  Carrera 43E #11A-46
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-17.png" class="w-full h-full object-cover" alt="Criminal Provenza">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Provenza</span>
+                  Carrera 35 #8A-125
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-18.png" class="w-full h-full object-cover" alt="Criminal Mall La Fé">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Mall La Fé</span>
+                  Local 40
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-19.png" class="w-full h-full object-cover" alt="Viva Envigado">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Viva Envigado</span>
+                  Zona Nómada · Local 396
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 9 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-20.png" class="w-full h-full object-cover" alt="Criminal Laureles">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Criminal Laureles</span>
+                  Transversal 39D #74-46 · Local 1
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 10 -->
+          <div class="carousel-slide chuzos p-4">
+            <div class="bg-criminalBlack border border-white/15 overflow-hidden">
+              <div class="w-full aspect-square bg-black flex items-center justify-center">
+                <img src="img/CHUZOS/PUNTOS-21.png" class="w-full h-full object-cover" alt="Centro Comercial Oviedo">
+              </div>
+              <div class="p-4 border-t border-white/15 text-white">
+                <p class="text-xs leading-snug">
+                  <span class="block font-semibold uppercase">Centro Comercial Oviedo</span>
+                  Plazoleta de comidas · Local 1234
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs leading-snug">
-        <span class="block font-semibold uppercase">Criminal Campestre La Estación</span>
-        Carrera 43A #18 Sur-135 · Local 1
+
+  <!-- CONTACTO (izquierda + justificado, rojo vivo) -->
+  <section id="contacto" class="py-20 bg-criminalBeigeSoft border-t border-criminalBlack/5">
+    <div class="max-w-3xl mx-auto px-4 js-animate opacity-0 translate-y-6 transition-all duration-700">
+
+      <p class="titulo-criminal text-criminalRed mb-3 text-3xl md:text-4xl tracking-[0.08em] uppercase text-left">
+        Contacto
       </p>
-    </div>
-  </div>
 
-  <!-- 2 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-13.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="1" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Lemont</span>
-        Local 0193
+      <p class="text-criminalBlack/70 text-sm md:text-base max-w-2xl mb-10 text-left" style="text-align: justify;">
+        Mientras abrimos nuevas cocinas y seguimos creciendo, queremos escucharte y sumar a quienes vibren con el crimen gastronómico.
       </p>
-    </div>
-  </div>
 
-  <!-- 3 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
+      <!-- BOTONES -->
+      <div class="grid md:grid-cols-2 gap-6">
+        <a href="https://forms.gle/HjXHxVQkbsvoC6gR8" target="_blank"
+           class="block py-4 px-6 bg-criminalRed text-white font-semibold text-lg shadow-md border border-criminalBlack/10
+                  hover:bg-criminalBlack hover:text-criminalBeige transition-all duration-300 transform hover:scale-[1.03]">
+          <span class="titulo-criminal tracking-wide uppercase">Queremos escucharte</span>
+        </a>
 
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-14.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="2" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Centro Comercial El Tesoro</span>
-        Plaza Palmas · Local 1571
-      </p>
-    </div>
-  </div>
-
-  <!-- 4 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-15.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="3" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Superior</span>
-        Calle 16B Sur #25B-2
-      </p>
-    </div>
-  </div>
-
-  <!-- 5 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-16.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="4" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Taquería Manila</span>
-        Carrera 43E #11A-46
-      </p>
-    </div>
-  </div>
-
-  <!-- 6 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-17.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="5" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Provenza</span>
-        Carrera 35 #8A-125
-      </p>
-    </div>
-  </div>
-
-  <!-- 7 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-18.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="6" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Mall La Fé</span>
-        Local 40
-      </p>
-    </div>
-  </div>
-
-  <!-- 8 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-19.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="7" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Viva Envigado</span>
-        Zona Nómada · Local 396
-      </p>
-    </div>
-  </div>
-
-  <!-- 9 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-20.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="8" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Criminal Laureles</span>
-        Transversal 39D #74-46 · Local 1
-      </p>
-    </div>
-  </div>
-
-  <!-- 10 -->
-  <div class="group cursor-pointer bg-white border-2 border-criminalBlack rounded-xl overflow-hidden
-              shadow-[0_10px_28px_-12px_rgba(0,0,0,0.35)]
-              hover:-translate-y-2 hover:shadow-[0_18px_45px_-14px_rgba(0,0,0,0.45)]
-              hover:border-criminalRed transition-all duration-300">
-
-    <div class="w-full aspect-square bg-criminalBeigeSoft flex items-center justify-center">
-      <img src="img/CHUZOS/PUNTOS-21.png"
-        class="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-500"
-        data-lightbox="puntos" data-index="9" />
-    </div>
-
-    <div class="p-3 border-t border-criminalBlack/20">
-      <p class="text-xs">
-        <span class="block font-semibold uppercase">Centro Comercial Oviedo</span>
-        Plazoleta de comidas · Local 1234
-      </p>
-    </div>
-  </div>
-
-</div>
-
-
-
-      
-
-
-
-    </div>
+        <a href="https://forms.gle/BJXazDSdKFrEhiQn8" target="_blank"
+           class="block py-4 px-6 bg-criminalBlack text-criminalBeige font-semibold text-lg shadow-md border border-criminalBlack/10
+                  hover:bg-criminalRed hover:text-white transition-all duration-300 transform hover:scale-[1.03]">
+          <span class="titulo-criminal tracking-wide uppercase">Criminal gang</span>
+        </a>
+      </div>
 
     </div>
   </section>
 
-<!-- CONTACTO -->
-<section id="contacto" class="py-20 bg-criminalBeigeSoft border-t border-criminalBlack/5">
-  <div class="max-w-3xl mx-auto px-4 text-center js-animate opacity-0 translate-y-6 transition-all duration-700">
-    
-    <p class="titulo-criminal  text-criminalRed mb-3">
-      CONTACTO
-    </p>
-    
-    <p class="text-criminalBlack/70 text-sm md:text-base max-w-xl mx-auto mb-10">
-      Mientras abrimos nuevas cocinas y seguimos creciendo, queremos escucharte y sumar a quienes vibren con el crimen gastronómico.
-    </p>
 
-    <!-- BOTONES -->
-    <div class="grid md:grid-cols-2 gap-6">
-
-      <!-- BOTÓN 1 -->
-      <a href="https://forms.gle/HjXHxVQkbsvoC6gR8" target="_blank"
-        class="block rounded-2xl py-4 px-6 bg-criminalRed text-white font-semibold text-lg shadow-md border border-criminalBlack/10
-               hover:bg-criminalBlack hover:text-criminalBeige transition-all duration-300 transform hover:scale-[1.03]">
-        <span class="titulo-criminal tracking-wide ">QUEREMOS ESCUCHARTE</span>
-      </a>
-
-      <!-- BOTÓN 2 -->
-      <a href="https://forms.gle/BJXazDSdKFrEhiQn8" target="_blank"
-        class="block rounded-2xl py-4 px-6 bg-criminalBlack text-criminalBeige font-semibold text-lg shadow-md border border-criminalBlack/10
-               hover:bg-criminalRed hover:text-white transition-all duration-300 transform hover:scale-[1.03]">
-        <span class="titulo-criminal tracking-wide ">CRIMINAL GANG</span>
-      </a>
-
-    </div>
-
-  </div>
-</section>
-
-
-  <!-- FOOTER -->
+  <!-- FOOTER (nuevo: instagram, correo, wpp adicional + logo horizontal grande) -->
   <footer class="border-t border-criminalBlack/10 bg-criminalBeigeSoft">
-    <div class="max-w-6xl mx-auto px-4 py-6 flex flex-col md:flex-row items-center justify-between text-[0.7rem] text-criminalBlack/70">
-      <span>© <span id="year"></span> Criminal Taquería · Medellín</span>
+    <div class="max-w-6xl mx-auto px-4 py-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <!-- Logo horizontal grande (ajusta el archivo si el nombre difiere) -->
+        <div class="flex items-center gap-4">
+          <img src="img/criminal-logo-horizontal.png" alt="Criminal Taquería" class="h-14 md:h-16 object-contain"
+               onerror="this.onerror=null; this.src='img/criminal-logo.png';">
+          <div class="text-xs text-criminalBlack/70">
+            <div class="font-semibold">Criminal Taquería · Medellín</div>
+            <div>© <span id="year"></span> Todos los derechos reservados</div>
+          </div>
+        </div>
+
+        <!-- Contacto rápido -->
+        <div class="text-sm text-criminalBlack/80 grid gap-2">
+          <a class="hover:underline" href="https://wa.me/573116242610?text=Hola%20Criminal%20Taquer%C3%ADa%2C%20quiero%20saber%20m%C3%A1s." target="_blank">
+            WhatsApp: +57 311 624 2610
+          </a>
+
+          <!-- WhatsApp adicional (edítalo si cambia) -->
+          <a class="hover:underline" href="https://wa.me/57XXXXXXXXXX?text=Hola%20Criminal%20Taquer%C3%ADa%2C%20quiero%20saber%20m%C3%A1s." target="_blank">
+            WhatsApp adicional: +57 XX XXX XXXX
+          </a>
+
+          <!-- Correo (edítalo si cambia) -->
+          <a class="hover:underline" href="mailto:contacto@criminaltaqueria.com">
+            Correo: contacto@criminaltaqueria.com
+          </a>
+
+          <!-- Instagram (edítalo si cambia) -->
+          <a class="hover:underline" href="https://instagram.com/criminaltaqueria" target="_blank">
+            Instagram: @criminaltaqueria
+          </a>
+        </div>
+      </div>
     </div>
   </footer>
-
-  <!-- LIGHTBOX -->
-  <div
-    id="lightbox"
-    class="fixed inset-0 bg-black/90 flex items-center justify-center z-[60] opacity-0 pointer-events-none transition-opacity"
-  >
-    <button
-      id="lightbox-close"
-      class="absolute top-4 right-4 text-white text-2xl md:text-3xl hover:text-criminalGold"
-      aria-label="Cerrar"
-    >
-      ✕
-    </button>
-    <button
-      id="lightbox-prev"
-      class="absolute left-4 md:left-8 text-white text-3xl md:text-4xl hover:text-criminalGold"
-      aria-label="Anterior"
-    >
-      ‹
-    </button>
-    <button
-      id="lightbox-next"
-      class="absolute right-4 md:right-8 text-white text-3xl md:text-4xl hover:text-criminalGold"
-      aria-label="Siguiente"
-    >
-      ›
-    </button>
-    <img
-      id="lightbox-image"
-      src=""
-      alt="Punto Criminal ampliado"
-      class="max-h-[80vh] max-w-[90vw] object-contain rounded-2xl border border-white/20 shadow-2xl"
-    />
-  </div>
-
-
-
 
 
   <!-- BOTÓN WHATSAPP FLOTANTE -->
@@ -830,44 +664,31 @@
   </a>
 
 
-
-
   <script>
     // Año dinámico
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Navbar scroll
+    // Navbar scroll (solo al hacer scroll: banda negra + textos blancos)
     const header = document.getElementById("site-header");
     const navLinks = document.querySelectorAll(".nav-link");
     const logoTop = document.querySelector(".header-logo-top");
     const logoBottom = document.querySelector(".header-logo-bottom");
-    const headerCta = document.querySelector(".header-cta");
 
     function updateHeader() {
       if (window.scrollY > 10) {
         header.classList.add("scrolled");
         navLinks.forEach(l => {
-          l.classList.add("text-criminalBlack");
-          l.classList.remove("text-white");
+          l.classList.add("text-white");
+          l.classList.remove("text-criminalBlack");
         });
-        if (logoTop) logoTop.classList.replace("text-white", "text-criminalRed");
-        if (logoBottom) logoBottom.classList.replace("text-white", "text-criminalBlack");
-        if (headerCta) {
-          headerCta.classList.remove("border-white/70", "text-white");
-          headerCta.classList.add("border-criminalBlack", "text-criminalBlack");
-        }
+        if (logoTop) logoTop.classList.replace("text-white", "text-white");
+        if (logoBottom) logoBottom.classList.replace("text-white", "text-white");
       } else {
         header.classList.remove("scrolled");
         navLinks.forEach(l => {
           l.classList.add("text-white");
           l.classList.remove("text-criminalBlack");
         });
-        if (logoTop) logoTop.classList.replace("text-criminalRed", "text-white");
-        if (logoBottom) logoBottom.classList.replace("text-criminalBlack", "text-white");
-        if (headerCta) {
-          headerCta.classList.add("border-white/70", "text-white");
-          headerCta.classList.remove("border-criminalBlack", "text-criminalBlack");
-        }
       }
     }
     window.addEventListener("scroll", updateHeader);
@@ -909,74 +730,91 @@
       });
     }
 
-    // LIGHTBOX lógica
-    const lightbox = document.getElementById("lightbox");
-    const lightboxImage = document.getElementById("lightbox-image");
-    const lightboxClose = document.getElementById("lightbox-close");
-    const lightboxPrev = document.getElementById("lightbox-prev");
-    const lightboxNext = document.getElementById("lightbox-next");
-    const thumbs = document.querySelectorAll('[data-lightbox="puntos"]');
+    // ===== CAROUSEL GENÉRICO (flechas + autoplay) =====
+    function createCarousel(name, { autoplayMs = 3500 } = {}) {
+      const track = document.querySelector(`[data-carousel="${name}"]`);
+      if (!track) return;
 
-    let currentIndex = 0;
+      const slides = Array.from(track.children);
+      const prevBtn = document.querySelector(`[data-carousel-prev="${name}"]`);
+      const nextBtn = document.querySelector(`[data-carousel-next="${name}"]`);
 
-    function openLightbox(index) {
-      currentIndex = index;
-      const img = thumbs[currentIndex];
-      if (!img) return;
-      lightboxImage.src = img.src;
-      lightbox.classList.remove("pointer-events-none", "opacity-0");
-      lightbox.classList.add("opacity-100");
-    }
+      let index = 0;
+      let timer = null;
 
-    function closeLightbox() {
-      lightbox.classList.add("opacity-0");
-      lightbox.classList.remove("opacity-100");
-      setTimeout(() => {
-        lightbox.classList.add("pointer-events-none");
-      }, 200);
-    }
+      const getPerView = () => {
+        // Solo chuzos muestra 2 en md+
+        if (name === "chuzos") {
+          return window.matchMedia("(min-width: 768px)").matches ? 2 : 1;
+        }
+        return 1; // productos/eventos
+      };
 
-    function showNext(delta) {
-      const total = thumbs.length;
-      currentIndex = (currentIndex + delta + total) % total;
-      const img = thumbs[currentIndex];
-      if (img) {
-        lightboxImage.src = img.src;
+      const clampIndex = () => {
+        const perView = getPerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        if (index > maxIndex) index = maxIndex;
+        if (index < 0) index = 0;
+      };
+
+      const update = () => {
+        const perView = getPerView();
+        const slideW = track.clientWidth / perView;
+        track.style.transform = `translateX(${-index * slideW}px)`;
+      };
+
+      const next = () => {
+        const perView = getPerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        index = (index >= maxIndex) ? 0 : index + 1;
+        update();
+      };
+
+      const prev = () => {
+        const perView = getPerView();
+        const maxIndex = Math.max(0, slides.length - perView);
+        index = (index <= 0) ? maxIndex : index - 1;
+        update();
+      };
+
+      const start = () => {
+        stop();
+        timer = setInterval(next, autoplayMs);
+      };
+
+      const stop = () => {
+        if (timer) clearInterval(timer);
+        timer = null;
+      };
+
+      if (prevBtn) prevBtn.addEventListener("click", () => { prev(); start(); });
+      if (nextBtn) nextBtn.addEventListener("click", () => { next(); start(); });
+
+      // Pausar al hover (desktop)
+      const viewport = track.closest(".carousel-viewport");
+      if (viewport) {
+        viewport.addEventListener("mouseenter", stop);
+        viewport.addEventListener("mouseleave", start);
+        // Touch: reiniciar tras interacción
+        viewport.addEventListener("touchstart", stop, { passive: true });
+        viewport.addEventListener("touchend", start, { passive: true });
       }
-    }
 
-    thumbs.forEach(thumb => {
-      thumb.addEventListener("click", () => {
-        const index = parseInt(thumb.getAttribute("data-index"), 10) || 0;
-        openLightbox(index);
+      window.addEventListener("resize", () => {
+        clampIndex();
+        update();
       });
-    });
 
-    if (lightboxClose) {
-      lightboxClose.addEventListener("click", closeLightbox);
-    }
-    if (lightboxPrev) {
-      lightboxPrev.addEventListener("click", () => showNext(-1));
-    }
-    if (lightboxNext) {
-      lightboxNext.addEventListener("click", () => showNext(1));
+      // init
+      clampIndex();
+      update();
+      start();
     }
 
-    lightbox.addEventListener("click", (e) => {
-      if (e.target === lightbox) {
-        closeLightbox();
-      }
-    });
-
-    document.addEventListener("keydown", (e) => {
-      const isOpen = !lightbox.classList.contains("pointer-events-none");
-      if (!isOpen) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowRight") showNext(1);
-      if (e.key === "ArrowLeft") showNext(-1);
-    });
-	
-	
+    // Crear carruseles con autoplay
+    createCarousel("productos", { autoplayMs: 3200 });
+    createCarousel("eventos", { autoplayMs: 3600 });
+    createCarousel("chuzos", { autoplayMs: 3400 });
   </script>
 </body>
 </html>
